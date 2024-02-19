@@ -1,5 +1,4 @@
-oclif-hello-world
-=================
+# oclif-hello-world
 
 oclif example Hello World CLI
 
@@ -8,10 +7,13 @@ oclif example Hello World CLI
 [![GitHub license](https://img.shields.io/github/license/oclif/hello-world)](https://github.com/oclif/hello-world/blob/main/LICENSE)
 
 <!-- toc -->
+* [oclif-hello-world](#oclif-hello-world)
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
+
 # Usage
+
 <!-- usage -->
 ```sh-session
 $ npm install -g humaans-cli
@@ -25,53 +27,58 @@ USAGE
 ...
 ```
 <!-- usagestop -->
+
 # Commands
+
 <!-- commands -->
-* [`humaans hello PERSON`](#humaans-hello-person)
-* [`humaans hello world`](#humaans-hello-world)
+* [`humaans clock in [TIME]`](#humaans-clock-in-time)
+* [`humaans clock out [TIME]`](#humaans-clock-out-time)
 * [`humaans help [COMMANDS]`](#humaans-help-commands)
+* [`humaans report [START] [END]`](#humaans-report-start-end)
 
-## `humaans hello PERSON`
+## `humaans clock in [TIME]`
 
-Say hello
+Clock in
 
 ```
 USAGE
-  $ humaans hello PERSON -f <value>
+  $ humaans clock in [TIME]
 
 ARGUMENTS
-  PERSON  Person to say hello to
-
-FLAGS
-  -f, --from=<value>  (required) Who is saying hello
+  TIME  Time at which to clock in
 
 DESCRIPTION
-  Say hello
+  Clock in
 
 EXAMPLES
-  $ oex hello friend --from oclif
-  hello friend from oclif! (./src/commands/hello/index.ts)
+  $ humaans clock in
+
+  $ humaans clock in 9:00
 ```
 
-_See code: [src/commands/hello/index.ts](https://github.com/andreicek/humaans-cli/blob/v0.0.0/src/commands/hello/index.ts)_
+_See code: [src/commands/clock/in.ts](https://github.com/andreicek/humaans-cli/blob/v0.0.0/src/commands/clock/in.ts)_
 
-## `humaans hello world`
+## `humaans clock out [TIME]`
 
-Say hello world
+Clock out
 
 ```
 USAGE
-  $ humaans hello world
+  $ humaans clock out [TIME]
+
+ARGUMENTS
+  TIME  Time at which to clock out
 
 DESCRIPTION
-  Say hello world
+  Clock out
 
 EXAMPLES
-  $ humaans hello world
-  hello world! (./src/commands/hello/world.ts)
+  $ humaans clock out
+
+  $ humaans clock out 17:00
 ```
 
-_See code: [src/commands/hello/world.ts](https://github.com/andreicek/humaans-cli/blob/v0.0.0/src/commands/hello/world.ts)_
+_See code: [src/commands/clock/out.ts](https://github.com/andreicek/humaans-cli/blob/v0.0.0/src/commands/clock/out.ts)_
 
 ## `humaans help [COMMANDS]`
 
@@ -92,4 +99,27 @@ DESCRIPTION
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.0.12/src/commands/help.ts)_
+
+## `humaans report [START] [END]`
+
+Generate an hour report
+
+```
+USAGE
+  $ humaans report [START] [END]
+
+ARGUMENTS
+  START  Start date
+  END    End date
+
+DESCRIPTION
+  Generate an hour report
+
+EXAMPLES
+  $ humaans report
+
+  $ humaans report 2023-03-01 2023-03-31
+```
+
+_See code: [src/commands/report.ts](https://github.com/andreicek/humaans-cli/blob/v0.0.0/src/commands/report.ts)_
 <!-- commandsstop -->

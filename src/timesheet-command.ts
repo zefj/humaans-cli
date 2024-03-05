@@ -14,10 +14,19 @@ export abstract class TimesheetCommand extends HumaansCommand {
   }
 
   protected async getLastTimesheetEntry() {
+    const timesheetEntries = await this.getTimesheetEntriesForToday()
+
+    if (timesheetEntries.length > 0) {
+      return timesheetEntries[0]
+    }
+
+    return null
+  }
+
+  protected async getTimesheetEntriesForToday() {
     const params = new URLSearchParams({
       personId: this.auth.personId,
       date: this.getCurrentDate(),
-      startTime: '00:00',
     })
 
     const response = await fetch(`https://app.humaans.io/api/timesheet-entries?${params}`, {
@@ -32,10 +41,6 @@ export abstract class TimesheetCommand extends HumaansCommand {
 
     const {data} = (await response.json()) as HumaansListResponse<HumaansTimesheetEntry>
 
-    if (data.length > 0) {
-      return data[0]
-    }
-
-    return null
+    return data
   }
 }

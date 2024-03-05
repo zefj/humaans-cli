@@ -28,7 +28,6 @@ const getEndDate = (end?: string) => {
 export default class Report extends Command {
   static args = {
     start: Args.string({description: 'Start date'}),
-    // eslint-disable-next-line perfectionist/sort-objects
     end: Args.string({description: 'End date'}),
   }
 

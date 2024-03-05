@@ -46,6 +46,7 @@ Run `yarn prepack` every time you make changes.
 * [`humaans help [COMMANDS]`](#humaans-help-commands)
 * [`humaans login`](#humaans-login)
 * [`humaans report [START] [END]`](#humaans-report-start-end)
+* [`humaans report today`](#humaans-report-today)
 
 ## `humaans clock in [TIME]`
 
@@ -150,4 +151,18 @@ EXAMPLES
 ```
 
 _See code: [src/commands/report.ts](https://github.com/andreicek/humaans-cli/blob/v0.0.0/src/commands/report.ts)_
+
+## `humaans report today`
+
+Generate an hour report for today
+
+```
+USAGE
+  $ humaans report today
+
+DESCRIPTION
+  Generate an hour report for today
+```
+
+_See code: [src/commands/report/today.ts](https://github.com/andreicek/humaans-cli/blob/v0.0.0/src/commands/report/today.ts)_
 <!-- commandsstop -->

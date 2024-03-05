@@ -44,6 +44,7 @@ Run `yarn prepack` every time you make changes.
 * [`humaans clock in [TIME]`](#humaans-clock-in-time)
 * [`humaans clock out [TIME]`](#humaans-clock-out-time)
 * [`humaans help [COMMANDS]`](#humaans-help-commands)
+* [`humaans login`](#humaans-login)
 * [`humaans report [START] [END]`](#humaans-report-start-end)
 
 ## `humaans clock in [TIME]`
@@ -109,6 +110,23 @@ DESCRIPTION
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.0.12/src/commands/help.ts)_
+
+## `humaans login`
+
+Login to Humaans
+
+```
+USAGE
+  $ humaans login
+
+DESCRIPTION
+  Login to Humaans
+
+EXAMPLES
+  $ humaans login
+```
+
+_See code: [src/commands/login.ts](https://github.com/andreicek/humaans-cli/blob/v0.0.0/src/commands/login.ts)_
 
 ## `humaans report [START] [END]`
 

@@ -9,13 +9,15 @@
   "dependencies": {
     "@oclif/core": "^3",
     "@oclif/plugin-help": "^6",
-    "@oclif/plugin-plugins": "^4"
+    "@oclif/plugin-plugins": "^4",
+    "node-fetch": "^3.3.2"
   },
   "description": "oclif example Hello World CLI",
   "devDependencies": {
     "@oclif/prettier-config": "^0.2.1",
     "@oclif/test": "^3",
     "@types/chai": "^4",
+    "@types/fs-extra": "^11.0.4",
     "@types/mocha": "^9.0.0",
     "@types/node": "^18",
     "chai": "^4",
@@ -23,6 +25,7 @@
     "eslint-config-oclif": "^5",
     "eslint-config-oclif-typescript": "^3",
     "eslint-config-prettier": "^9.1.0",
+    "fs-extra": "^11.2.0",
     "mocha": "^10",
     "oclif": "^4",
     "shx": "^0.3.3",
@@ -30,7 +33,7 @@
     "typescript": "^5"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.10"
   },
   "files": [
     "/bin",

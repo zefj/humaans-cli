@@ -9,6 +9,7 @@ oclif example Hello World CLI
 <!-- toc -->
 * [oclif-hello-world](#oclif-hello-world)
 * [Usage](#usage)
+* [Development](#development)
 * [Commands](#commands)
 <!-- tocstop -->
 
@@ -27,6 +28,15 @@ USAGE
 ...
 ```
 <!-- usagestop -->
+
+# Development
+```sh-session
+$ yarn install
+$ yarn prepack
+$ ./bin/dev.js help 
+```
+
+Run `yarn prepack` every time you make changes.
 
 # Commands
 

@@ -1,3 +1,7 @@
 {
-  "extends": ["oclif", "oclif-typescript", "prettier"]
+  "extends": ["oclif", "oclif-typescript", "prettier"],
+  "rules": {
+    "import/default": "off",
+    "import/no-named-as-default-member": "off"
+  }
 }

@@ -7,7 +7,9 @@ export default class Today extends TimesheetCommand {
     const timesheetEntries = await this.getTimesheetEntriesForToday()
 
     const sum = this.sumTimesheetEntries(timesheetEntries)
+    const sumHours = this.formatTimesheetEntriesSum(sum)
+    const sumBase10 = this.formatTimesheetEntriesSumBase10(sum)
 
-    this.log(`You clocked ${this.formatTimesheetEntriesSum(sum)} hours today.`)
+    this.log(`You clocked ${sumHours} (${sumBase10}) hours today.`)
   }
 }

@@ -13,11 +13,13 @@ export abstract class TimesheetCommand extends HumaansCommand {
     return new Intl.DateTimeFormat('en-GB', {dateStyle: undefined, timeStyle: 'short'}).format()
   }
 
-  protected async getLastTimesheetEntry() {
+  protected async getActiveTimesheetEntry() {
     const timesheetEntries = await this.getTimesheetEntriesForToday()
 
     if (timesheetEntries.length > 0) {
-      return timesheetEntries[0]
+      // Find the unended timesheet. We use `Array.find` because we're not sure
+      // how Humaans API sorts the results.
+      return timesheetEntries.find(({endTime}) => !endTime) || null
     }
 
     return null

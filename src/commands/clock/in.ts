@@ -14,10 +14,10 @@ export default class ClockIn extends TimesheetCommand {
   static examples = ['<%= config.bin %> <%= command.id %>', '<%= config.bin %> <%= command.id %> 9:00']
 
   public async run(): Promise<void> {
-    const lastTimesheetEntry = await this.getLastTimesheetEntry()
+    const activeTimesheetEntry = await this.getActiveTimesheetEntry()
 
-    if (lastTimesheetEntry && !lastTimesheetEntry.endTime) {
-      this.log(`You're already clocked in (since ${lastTimesheetEntry.startTime}).`)
+    if (activeTimesheetEntry) {
+      this.log(`You're already clocked in (since ${activeTimesheetEntry.startTime}).`)
       this.exit()
     }
 

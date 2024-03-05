@@ -14,14 +14,14 @@ export default class ClockOut extends TimesheetCommand {
   static examples = ['<%= config.bin %> <%= command.id %>', '<%= config.bin %> <%= command.id %> 17:00']
 
   public async run(): Promise<void> {
-    const lastTimesheetEntry = await this.getLastTimesheetEntry()
+    const activeTimesheetEntry = await this.getActiveTimesheetEntry()
 
-    if (!lastTimesheetEntry || lastTimesheetEntry.endTime) {
+    if (!activeTimesheetEntry) {
       this.log(`You're not clocked in.`)
       this.exit()
     }
 
-    this.clockOut(lastTimesheetEntry)
+    this.clockOut(activeTimesheetEntry)
   }
 
   private async clockOut(timesheetEntry: HumaansTimesheetEntry) {

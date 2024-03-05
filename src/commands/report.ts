@@ -1,4 +1,6 @@
-import {Args, Command} from '@oclif/core'
+import {Args} from '@oclif/core'
+
+import {TimesheetCommand} from '../timesheet-command.js'
 
 const getStartDate = (start?: string) => {
   // TODO: would be nice to parse and check if valid date
@@ -25,7 +27,7 @@ const getEndDate = (end?: string) => {
   return date.toISOString().slice(0, 10)
 }
 
-export default class Report extends Command {
+export default class Report extends TimesheetCommand {
   static args = {
     start: Args.string({description: 'Start date'}),
     end: Args.string({description: 'End date'}),
@@ -41,6 +43,12 @@ export default class Report extends Command {
     const start = getStartDate(args.start)
     const end = getEndDate(args.end)
 
-    this.log(`Getting hour report for period ${start} - ${end}`)
+    const timesheetEntries = await this.getTimesheetEntriesForRange(start, end)
+
+    const sum = this.sumTimesheetEntries(timesheetEntries)
+    const sumHours = this.formatTimesheetEntriesSum(sum)
+    const sumBase10 = this.formatTimesheetEntriesSumBase10(sum)
+
+    this.log(`You clocked ${sumHours} hours (${sumBase10}) between ${start} and ${end}.`)
   }
 }

@@ -50,5 +50,7 @@ export default class Report extends TimesheetCommand {
     const sumBase10 = this.formatTimesheetEntriesSumBase10(sum)
 
     this.log(`You clocked ${sumHours} hours (${sumBase10}) between ${start} and ${end}.`)
+
+    this.logTimesheetTable(timesheetEntries)
   }
 }

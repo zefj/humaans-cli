@@ -11,5 +11,7 @@ export default class Today extends TimesheetCommand {
     const sumBase10 = this.formatTimesheetEntriesSumBase10(sum)
 
     this.log(`You clocked ${sumHours} (${sumBase10}) hours today.`)
+
+    this.logTimesheetTable(timesheetEntries)
   }
 }

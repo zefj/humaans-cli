@@ -1,3 +1,5 @@
+import {ux} from '@oclif/core'
+import _ from 'lodash'
 import fetch from 'node-fetch'
 
 import {HumaansCommand} from './humaans-command.js'
@@ -59,6 +61,18 @@ export abstract class TimesheetCommand extends HumaansCommand {
     return data
   }
 
+  protected prepareTimesheetEntriesForTable(timesheetEntries: HumaansTimesheetEntry[]) {
+    const data = _.flow([
+      (rows) => _.sortBy(rows, 'date'),
+      (rows) => _.reverse(rows),
+      (rows) => _.groupBy(rows, 'date'),
+      (rows) => _.mapValues(rows, (entries) => this.sumTimesheetEntries(entries)),
+      (rows) => _.flatMap(rows, (value, key) => ({...value, date: key})),
+    ])(timesheetEntries)
+
+    return data
+  }
+
   protected sumTimesheetEntries(timesheetEntries: HumaansTimesheetEntry[]) {
     let hours = 0
     let minutes = 0
@@ -96,5 +110,15 @@ export abstract class TimesheetCommand extends HumaansCommand {
   protected formatTimesheetEntriesSumBase10({hours, minutes}: {hours: number; minutes: number}) {
     const minutesBase10 = (100 * minutes) / 60
     return new Intl.NumberFormat('en-GB', {maximumFractionDigits: 2}).format(hours + minutesBase10 / 100)
+  }
+
+  protected logTimesheetTable(timesheetEntries: HumaansTimesheetEntry[]) {
+    const timesheetEntriesForTable = this.prepareTimesheetEntriesForTable(timesheetEntries)
+
+    ux.table(timesheetEntriesForTable, {
+      date: {},
+      hours: {get: (row) => this.formatTimesheetEntriesSum(row as {hours: number; minutes: number})},
+      // base10: {get: (row) => this.formatTimesheetEntriesSumBase10(row as {hours: number; minutes: number})},
+    })
   }
 }

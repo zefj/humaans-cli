@@ -49,6 +49,6 @@ export default class Report extends TimesheetCommand {
     const data = this.prepareDataForReporting(timesheetEntries, timeAwayBreakdown)
 
     this.log(`You clocked ${data.sum} hours (${data.sumBase10}) between ${start} and ${end}.`)
-    this.logTimesheetTable(data.breakdown)
+    this.logHoursClockedBreakdownTable(data.breakdown)
   }
 }

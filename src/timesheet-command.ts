@@ -100,8 +100,8 @@ export abstract class TimesheetCommand extends HumaansCommand {
 
     return {
       breakdown: data,
-      sum: this.formatTimesheetEntriesSum(breakdownSum),
-      sumBase10: this.formatTimesheetEntriesSumBase10(breakdownSum),
+      sum: this.formatHoursMinutes(breakdownSum),
+      sumBase10: this.formatHoursMinutesBase10(breakdownSum),
     }
   }
 
@@ -150,23 +150,13 @@ export abstract class TimesheetCommand extends HumaansCommand {
     return {hours, minutes}
   }
 
-  private formatTimesheetEntriesSum({hours, minutes}: {hours: number; minutes: number}) {
+  private formatHoursMinutes({hours, minutes}: {hours: number; minutes: number}) {
     return `${hours}:${minutes.toString().padStart(2, '0')}`
   }
 
-  private formatTimesheetEntriesSumBase10({hours, minutes}: {hours: number; minutes: number}) {
+  private formatHoursMinutesBase10({hours, minutes}: {hours: number; minutes: number}) {
     const minutesBase10 = (100 * minutes) / 60
     return new Intl.NumberFormat('en-GB', {maximumFractionDigits: 2}).format(hours + minutesBase10 / 100)
-  }
-
-  protected logTimesheetTable(breakdown: HoursClockedBreakdown[]) {
-    ux.table(breakdown, {
-      date: {},
-      hours: {
-        get: (row) =>
-          `${this.formatTimesheetEntriesSum(row as {hours: number; minutes: number})} ${row.pto ? '🌴' : ''}`,
-      },
-    })
   }
 
   protected async getTimeAwayBreakdownForRange(start: string, end: string) {
@@ -192,7 +182,7 @@ export abstract class TimesheetCommand extends HumaansCommand {
     return timeaway
   }
 
-  protected async getTimeAway(params: object) {
+  private async getTimeAway(params: object) {
     const queryParams = new URLSearchParams({
       personId: this.auth.personId,
       ...params,
@@ -213,7 +203,7 @@ export abstract class TimesheetCommand extends HumaansCommand {
     return data
   }
 
-  protected rejectIrrelevantTimeAway(
+  private rejectIrrelevantTimeAway(
     timeAwayEntries: HumaansTimeAwayEntry[],
     start: string,
     end: string,
@@ -226,5 +216,14 @@ export abstract class TimesheetCommand extends HumaansCommand {
     ])(timeAwayEntries)
 
     return timeAway
+  }
+
+  protected logHoursClockedBreakdownTable(breakdown: HoursClockedBreakdown[]) {
+    ux.table(breakdown, {
+      date: {},
+      hours: {
+        get: (row) => `${this.formatHoursMinutes(row as {hours: number; minutes: number})} ${row.pto ? '🌴' : ''}`,
+      },
+    })
   }
 }

@@ -44,13 +44,11 @@ export default class Report extends TimesheetCommand {
     const end = getEndDate(args.end)
 
     const timesheetEntries = await this.getTimesheetEntriesForRange(start, end)
+    const timeAwayBreakdown = await this.getTimeAwayBreakdownForRange(start, end)
 
-    const sum = this.sumTimesheetEntries(timesheetEntries)
-    const sumHours = this.formatTimesheetEntriesSum(sum)
-    const sumBase10 = this.formatTimesheetEntriesSumBase10(sum)
+    const data = this.prepareDataForReporting(timesheetEntries, timeAwayBreakdown)
 
-    this.log(`You clocked ${sumHours} hours (${sumBase10}) between ${start} and ${end}.`)
-
-    this.logTimesheetTable(timesheetEntries)
+    this.log(`You clocked ${data.sum} hours (${data.sumBase10}) between ${start} and ${end}.`)
+    this.logTimesheetTable(data.breakdown)
   }
 }

@@ -34,3 +34,44 @@ export type HumaansTimesheetEntry = {
   createdAt: string
   updatedAt: string
 }
+
+/**
+ * https://docs.humaans.io/api/#time-away-object
+ */
+export type HumaansTimeAwayEntry = {
+  id: string
+  personId: string
+  startDate: string
+  startPeriod: 'full' | 'am' | 'pm'
+  endDate: string
+  endPeriod: 'full' | 'am' | 'pm'
+  timeAwayTypeId: string
+  name: string
+  isTimeOff: true
+  workingFromLocationId: null
+  note: string
+  breakdown: TimeAwayBreakdown[]
+  days: number
+  requestStatus: 'approved' | 'declined'
+  reviewedBy: string
+  reviewedAt: string
+  reviewNote: string
+  publicHolidayCalendarId: string
+  workingDays: {day: string}[]
+  createdAt: string
+  updatedAt: string
+}
+
+export type TimeAwayBreakdown = {
+  date: string
+  period: 'full' | 'am' | 'pm'
+  weekend?: boolean
+  holiday?: boolean
+}
+
+export type HoursClockedBreakdown = {
+  date: string
+  hours: number
+  minutes: number
+  pto: boolean
+}

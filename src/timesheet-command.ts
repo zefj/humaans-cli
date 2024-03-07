@@ -3,7 +3,13 @@ import _ from 'lodash'
 import fetch from 'node-fetch'
 
 import {HumaansCommand} from './humaans-command.js'
-import {HumaansListResponse, HumaansTimesheetEntry} from './types.js'
+import {
+  HoursClockedBreakdown,
+  HumaansListResponse,
+  HumaansTimeAwayEntry,
+  HumaansTimesheetEntry,
+  TimeAwayBreakdown,
+} from './types.js'
 
 export abstract class TimesheetCommand extends HumaansCommand {
   protected getCurrentDate() {
@@ -61,19 +67,45 @@ export abstract class TimesheetCommand extends HumaansCommand {
     return data
   }
 
-  protected prepareTimesheetEntriesForTable(timesheetEntries: HumaansTimesheetEntry[]) {
-    const data = _.flow([
+  protected prepareDataForReporting(
+    timesheetEntries: HumaansTimesheetEntry[],
+    timeAwayBreakdown: TimeAwayBreakdown[] = [],
+  ) {
+    const timeAwayBreakdownAsTimesheetEntries = timeAwayBreakdown.map((breakdown) => ({
+      date: breakdown.date,
+      duration: {
+        hours: breakdown.period === 'full' ? 8 : 4,
+        minutes: 0,
+      },
+    }))
+
+    const timeAwayDates = new Set(timeAwayBreakdownAsTimesheetEntries.map(({date}) => date))
+    const timesheetAndTimeAwayEntries = [...timesheetEntries, ...timeAwayBreakdownAsTimesheetEntries]
+
+    const data: HoursClockedBreakdown[] = _.flow([
       (rows) => _.sortBy(rows, 'date'),
       (rows) => _.reverse(rows),
       (rows) => _.groupBy(rows, 'date'),
       (rows) => _.mapValues(rows, (entries) => this.sumTimesheetEntries(entries)),
-      (rows) => _.flatMap(rows, (value, key) => ({...value, date: key})),
-    ])(timesheetEntries)
+      (rows) =>
+        _.flatMap(rows, (value, key) => ({
+          date: key,
+          hours: value.hours,
+          minutes: value.minutes,
+          pto: timeAwayDates.has(key),
+        })),
+    ])(timesheetAndTimeAwayEntries)
 
-    return data
+    const breakdownSum = this.sumHoursClockedBreakdown(data)
+
+    return {
+      breakdown: data,
+      sum: this.formatTimesheetEntriesSum(breakdownSum),
+      sumBase10: this.formatTimesheetEntriesSumBase10(breakdownSum),
+    }
   }
 
-  protected sumTimesheetEntries(timesheetEntries: HumaansTimesheetEntry[]) {
+  private sumTimesheetEntries(timesheetEntries: HumaansTimesheetEntry[]) {
     let hours = 0
     let minutes = 0
 
@@ -103,22 +135,96 @@ export abstract class TimesheetCommand extends HumaansCommand {
     return {hours, minutes}
   }
 
-  protected formatTimesheetEntriesSum({hours, minutes}: {hours: number; minutes: number}) {
+  private sumHoursClockedBreakdown(breakdown: HoursClockedBreakdown[]) {
+    let hours = 0
+    let minutes = 0
+
+    for (const entry of breakdown) {
+      hours += entry.hours
+      minutes += entry.minutes
+    }
+
+    hours += Math.floor(minutes / 60)
+    minutes %= 60
+
+    return {hours, minutes}
+  }
+
+  private formatTimesheetEntriesSum({hours, minutes}: {hours: number; minutes: number}) {
     return `${hours}:${minutes.toString().padStart(2, '0')}`
   }
 
-  protected formatTimesheetEntriesSumBase10({hours, minutes}: {hours: number; minutes: number}) {
+  private formatTimesheetEntriesSumBase10({hours, minutes}: {hours: number; minutes: number}) {
     const minutesBase10 = (100 * minutes) / 60
     return new Intl.NumberFormat('en-GB', {maximumFractionDigits: 2}).format(hours + minutesBase10 / 100)
   }
 
-  protected logTimesheetTable(timesheetEntries: HumaansTimesheetEntry[]) {
-    const timesheetEntriesForTable = this.prepareTimesheetEntriesForTable(timesheetEntries)
-
-    ux.table(timesheetEntriesForTable, {
+  protected logTimesheetTable(breakdown: HoursClockedBreakdown[]) {
+    ux.table(breakdown, {
       date: {},
-      hours: {get: (row) => this.formatTimesheetEntriesSum(row as {hours: number; minutes: number})},
-      // base10: {get: (row) => this.formatTimesheetEntriesSumBase10(row as {hours: number; minutes: number})},
+      hours: {
+        get: (row) =>
+          `${this.formatTimesheetEntriesSum(row as {hours: number; minutes: number})} ${row.pto ? '🌴' : ''}`,
+      },
     })
+  }
+
+  protected async getTimeAwayBreakdownForRange(start: string, end: string) {
+    const timeAwayEntries = await this.getTimeAwayWithPaddingForRange(start, end)
+    return this.rejectIrrelevantTimeAway(timeAwayEntries, start, end)
+  }
+
+  private async getTimeAwayWithPaddingForRange(start: string, end: string) {
+    // We fetch 2 months back and forward because of how time away periods in
+    // Humaans work. We want to avoid a situation where a time away period
+    // starts or ends outside of the specified range and we miss it.
+    const paddedStart = new Date(start)
+    paddedStart.setMonth(paddedStart.getMonth() - 2)
+
+    const paddedEnd = new Date(end)
+    paddedEnd.setMonth(paddedEnd.getMonth() + 2)
+
+    const timeaway = await this.getTimeAway({
+      'startDate[$gte]': paddedStart.toISOString().slice(0, 10),
+      'endDate[$lte]': paddedEnd.toISOString().slice(0, 10),
+    })
+
+    return timeaway
+  }
+
+  protected async getTimeAway(params: object) {
+    const queryParams = new URLSearchParams({
+      personId: this.auth.personId,
+      ...params,
+    })
+
+    const response = await fetch(`https://app.humaans.io/api/time-away?${queryParams}`, {
+      headers: {Authorization: `Bearer ${this.auth.token}`, 'Content-Type': 'application/json'},
+      method: 'get',
+    })
+
+    if (response.status !== 200) {
+      this.logHumaansApiError(response)
+      this.exit(1)
+    }
+
+    const {data} = (await response.json()) as HumaansListResponse<HumaansTimeAwayEntry>
+
+    return data
+  }
+
+  protected rejectIrrelevantTimeAway(
+    timeAwayEntries: HumaansTimeAwayEntry[],
+    start: string,
+    end: string,
+  ): TimeAwayBreakdown[] {
+    const timeAway = _.flow([
+      (rows) => _.reject(rows, (row) => row.type !== 'pto' || row.days === 0 || row.requestStatus === 'rejected'),
+      (rows) => _.flatMap(rows, (row) => row.breakdown),
+      (rows) => _.reject(rows, (row) => row.weekend || row.holiday),
+      (rows) => _.filter(rows, (row) => row.date >= start && row.date <= end),
+    ])(timeAwayEntries)
+
+    return timeAway
   }
 }

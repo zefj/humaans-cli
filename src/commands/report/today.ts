@@ -6,12 +6,8 @@ export default class Today extends TimesheetCommand {
   public async run(): Promise<void> {
     const timesheetEntries = await this.getTimesheetEntriesForToday()
 
-    const sum = this.sumTimesheetEntries(timesheetEntries)
-    const sumHours = this.formatTimesheetEntriesSum(sum)
-    const sumBase10 = this.formatTimesheetEntriesSumBase10(sum)
+    const data = this.prepareDataForReporting(timesheetEntries)
 
-    this.log(`You clocked ${sumHours} (${sumBase10}) hours today.`)
-
-    this.logTimesheetTable(timesheetEntries)
+    this.log(`You clocked ${data.sum} (${data.sumBase10}) hours today.`)
   }
 }

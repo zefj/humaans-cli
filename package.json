@@ -72,7 +72,7 @@
     "test": "mocha --forbid-only \"test/**/*.test.ts\"",
     "version": "oclif readme && git add README.md"
   },
-  "version": "0.0.0",
+  "version": "0.1.0",
   "bugs": "https://github.com/andreicek/humaans-cli/issues",
   "keywords": [
     "oclif"

@@ -42,7 +42,7 @@
     "/dist",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/andreicek/humaans-cli",
+  "homepage": "https://github.com/zefj/humaans-cli",
   "license": "MIT",
   "main": "dist/index.js",
   "name": "humaans-cli",
@@ -61,7 +61,7 @@
       }
     }
   },
-  "repository": "andreicek/humaans-cli",
+  "repository": "zefj/humaans-cli",
   "scripts": {
     "build": "shx rm -rf dist && tsc -b",
     "lint": "eslint . --ext .ts",
@@ -73,7 +73,7 @@
     "version": "oclif readme && git add README.md"
   },
   "version": "0.1.0",
-  "bugs": "https://github.com/andreicek/humaans-cli/issues",
+  "bugs": "https://github.com/zefj/humaans-cli/issues",
   "keywords": [
     "oclif"
   ],

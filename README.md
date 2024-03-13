@@ -76,7 +76,7 @@ EXAMPLES
   $ humaans clock in 9:00
 ```
 
-_See code: [src/commands/clock/in.ts](https://github.com/andreicek/humaans-cli/blob/v0.1.0/src/commands/clock/in.ts)_
+_See code: [src/commands/clock/in.ts](https://github.com/zefj/humaans-cli/blob/v0.1.0/src/commands/clock/in.ts)_
 
 ## `humaans clock out [TIME]`
 
@@ -98,7 +98,7 @@ EXAMPLES
   $ humaans clock out 17:00
 ```
 
-_See code: [src/commands/clock/out.ts](https://github.com/andreicek/humaans-cli/blob/v0.1.0/src/commands/clock/out.ts)_
+_See code: [src/commands/clock/out.ts](https://github.com/zefj/humaans-cli/blob/v0.1.0/src/commands/clock/out.ts)_
 
 ## `humaans help [COMMANDS]`
 
@@ -135,7 +135,7 @@ EXAMPLES
   $ humaans login
 ```
 
-_See code: [src/commands/login.ts](https://github.com/andreicek/humaans-cli/blob/v0.1.0/src/commands/login.ts)_
+_See code: [src/commands/login.ts](https://github.com/zefj/humaans-cli/blob/v0.1.0/src/commands/login.ts)_
 
 ## `humaans report [START] [END]`
 
@@ -158,7 +158,7 @@ EXAMPLES
   $ humaans report 2023-03-01 2023-03-31
 ```
 
-_See code: [src/commands/report.ts](https://github.com/andreicek/humaans-cli/blob/v0.1.0/src/commands/report.ts)_
+_See code: [src/commands/report.ts](https://github.com/zefj/humaans-cli/blob/v0.1.0/src/commands/report.ts)_
 
 ## `humaans report today`
 
@@ -172,5 +172,5 @@ DESCRIPTION
   Generate an hour report for today
 ```
 
-_See code: [src/commands/report/today.ts](https://github.com/andreicek/humaans-cli/blob/v0.1.0/src/commands/report/today.ts)_
+_See code: [src/commands/report/today.ts](https://github.com/zefj/humaans-cli/blob/v0.1.0/src/commands/report/today.ts)_
 <!-- commandsstop -->

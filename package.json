@@ -14,7 +14,7 @@
     "lodash": "^4.17.21",
     "node-fetch": "^3.3.2"
   },
-  "description": "oclif example Hello World CLI",
+  "description": "A simple CLI for humaans.io",
   "devDependencies": {
     "@oclif/prettier-config": "^0.2.1",
     "@oclif/test": "^3",

@@ -1,17 +1,25 @@
-# oclif-hello-world
+# humaans-cli
 
-oclif example Hello World CLI
+A simple CLI for [humaans.io](https://humaans.io), put together to provide easier access to time tracking features and reporting right from the command line.
 
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![CircleCI](https://circleci.com/gh/oclif/hello-world/tree/main.svg?style=shield)](https://circleci.com/gh/oclif/hello-world/tree/main)
-[![GitHub license](https://img.shields.io/github/license/oclif/hello-world)](https://github.com/oclif/hello-world/blob/main/LICENSE)
+Not affiliated with Humaans. Built for internal needs.
 
 <!-- toc -->
-* [oclif-hello-world](#oclif-hello-world)
+* [humaans-cli](#humaans-cli)
+* [Why](#why)
 * [Usage](#usage)
 * [Development](#development)
 * [Commands](#commands)
 <!-- tocstop -->
+
+# Why
+
+Humaans is missing a few crucial features:
+
+- No desktop app, lackluster Slack app
+- No easy access to total time clocked today
+- No sum of hours clocked in a period
+
 
 # Usage
 
@@ -131,7 +139,7 @@ _See code: [src/commands/login.ts](https://github.com/andreicek/humaans-cli/blob
 
 ## `humaans report [START] [END]`
 
-Generate an hour report
+Generate an hour report. Takes paid time off into consideration.
 
 ```
 USAGE
@@ -142,7 +150,7 @@ ARGUMENTS
   END    End date
 
 DESCRIPTION
-  Generate an hour report
+  Generate an hour report. Takes paid time off into consideration.
 
 EXAMPLES
   $ humaans report

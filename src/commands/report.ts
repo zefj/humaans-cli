@@ -33,7 +33,7 @@ export default class Report extends TimesheetCommand {
     end: Args.string({description: 'End date'}),
   }
 
-  static description = 'Generate an hour report'
+  static description = 'Generate an hour report. Takes paid time off into consideration.'
 
   static examples = ['<%= config.bin %> <%= command.id %>', '<%= config.bin %> <%= command.id %> 2023-03-01 2023-03-31']
 

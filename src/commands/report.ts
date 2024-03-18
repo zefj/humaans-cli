@@ -70,6 +70,11 @@ export default class Report extends TimesheetCommand {
     const start = getStartDate(args.start)
     const end = getEndDate(args.end)
 
+    if (start > end) {
+      this.logError(`Start date must be earlier than end date, got a period: ${start} - ${end}.`)
+      this.exit(1)
+    }
+
     const timesheetEntries = await this.getTimesheetEntriesForRange(start, end)
     const timeAwayBreakdown = await this.getTimeAwayBreakdownForRange(start, end)
 

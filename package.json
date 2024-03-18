@@ -12,7 +12,8 @@
     "@oclif/plugin-help": "^6",
     "@oclif/plugin-plugins": "^4",
     "lodash": "^4.17.21",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "fs-extra": "^11.2.0"
   },
   "description": "A simple CLI for humaans.io",
   "devDependencies": {
@@ -27,7 +28,6 @@
     "eslint-config-oclif": "^5",
     "eslint-config-oclif-typescript": "^3",
     "eslint-config-prettier": "^9.1.0",
-    "fs-extra": "^11.2.0",
     "mocha": "^10",
     "oclif": "^4",
     "shx": "^0.3.3",

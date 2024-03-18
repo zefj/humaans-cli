@@ -1,4 +1,5 @@
 import {Args} from '@oclif/core'
+import chalk from 'chalk'
 
 import {TimesheetCommand} from '../timesheet-command.js'
 
@@ -74,8 +75,16 @@ export default class Report extends TimesheetCommand {
 
     const data = this.prepareDataForReporting(timesheetEntries, timeAwayBreakdown)
 
-    this.log(`You clocked ${data.sum} hours (${data.sumBase10}) between ${start} and ${end}.`)
-    this.logHoursClockedBreakdownTable(data.breakdown)
+    this.log(
+      `🗓️  You clocked ${chalk.bold(data.sum)} hours (${data.sumBase10}) between ${chalk.bold(start)} and ${chalk.bold(
+        end,
+      )}.`,
+    )
+
+    if (data.breakdown.length > 0) {
+      this.log()
+      this.logHoursClockedBreakdownTable(data.breakdown)
+    }
   }
 
   public async runForToday(): Promise<void> {
@@ -83,6 +92,6 @@ export default class Report extends TimesheetCommand {
 
     const data = this.prepareDataForReporting(timesheetEntries)
 
-    this.log(`You clocked ${data.sum} (${data.sumBase10}) hours today.`)
+    this.log(`🗓️  You clocked ${chalk.bold(data.sum)} hours (${data.sumBase10}) ${chalk.bold('today')}.`)
   }
 }

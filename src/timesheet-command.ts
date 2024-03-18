@@ -150,6 +150,11 @@ export abstract class TimesheetCommand extends HumaansCommand {
     return {hours, minutes}
   }
 
+  public dropSeconds(time: string) {
+    // I know this is a bit lazy but it should be enough.
+    return time.slice(0, -3)
+  }
+
   private formatHoursMinutes({hours, minutes}: {hours: number; minutes: number}) {
     return `${hours}:${minutes.toString().padStart(2, '0')}`
   }

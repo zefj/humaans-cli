@@ -1,4 +1,5 @@
 import {Args} from '@oclif/core'
+import chalk from 'chalk'
 import fetch from 'node-fetch'
 
 import {TimesheetCommand} from '../../timesheet-command.js'
@@ -20,7 +21,7 @@ export default class ClockIn extends TimesheetCommand {
     const activeTimesheetEntry = await this.getActiveTimesheetEntry()
 
     if (activeTimesheetEntry) {
-      this.log(`You're already clocked in (since ${activeTimesheetEntry.startTime}).`)
+      this.logError(`You're already clocked in (since ${activeTimesheetEntry.startTime}).`)
       this.exit()
     }
 
@@ -50,7 +51,8 @@ export default class ClockIn extends TimesheetCommand {
     }
 
     const data = (await response.json()) as HumaansTimesheetEntry
+    const clockInTime = this.dropSeconds(data.startTime)
 
-    this.log(`Clocked in at ${data.startTime} ✅`)
+    this.log(`⏱️  Clocked in at ${chalk.bold(clockInTime)}.`)
   }
 }

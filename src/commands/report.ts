@@ -9,8 +9,7 @@ const getStartDate = (start?: string) => {
   }
 
   const date = new Date()
-  date.setDate(16)
-  date.setMonth(date.getMonth() - 1)
+  date.setDate(1)
 
   return date.toISOString().slice(0, 10)
 }
@@ -22,7 +21,8 @@ const getEndDate = (end?: string) => {
   }
 
   const date = new Date()
-  date.setDate(15)
+  date.setMonth(date.getMonth() + 1)
+  date.setDate(0)
 
   return date.toISOString().slice(0, 10)
 }

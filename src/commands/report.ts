@@ -33,11 +33,37 @@ export default class Report extends TimesheetCommand {
     end: Args.string({description: 'End date'}),
   }
 
-  static description = 'Generate an hour report. Takes paid time off into consideration.'
-
-  static examples = ['<%= config.bin %> <%= command.id %>', '<%= config.bin %> <%= command.id %> 2023-03-01 2023-03-31']
+  static description = 'Generate an hour report.'
+  static examples = [
+    {
+      description: `Calculate report from the first day to the last day of the current month:`,
+      command: `$ <%= config.bin %> <%= command.id %>`,
+    },
+    {
+      description: `Calculate report for today:`,
+      command: `$ <%= config.bin %> <%= command.id %> today`,
+    },
+    {
+      description: `Calculate report from the given day to the last day of the current month:`,
+      command: `$ <%= config.bin %> <%= command.id %> 2023-03-01`,
+    },
+    {
+      description: `Calculate report for the given period:`,
+      command: `$ <%= config.bin %> <%= command.id %> 2023-03-10 2023-04-10`,
+    },
+  ]
 
   public async run(): Promise<void> {
+    const {args} = await this.parse(Report)
+
+    if (args.start === 'today') {
+      return this.runForToday()
+    }
+
+    return this.runForPeriod()
+  }
+
+  public async runForPeriod(): Promise<void> {
     const {args} = await this.parse(Report)
 
     const start = getStartDate(args.start)
@@ -50,5 +76,13 @@ export default class Report extends TimesheetCommand {
 
     this.log(`You clocked ${data.sum} hours (${data.sumBase10}) between ${start} and ${end}.`)
     this.logHoursClockedBreakdownTable(data.breakdown)
+  }
+
+  public async runForToday(): Promise<void> {
+    const timesheetEntries = await this.getTimesheetEntriesForToday()
+
+    const data = this.prepareDataForReporting(timesheetEntries)
+
+    this.log(`You clocked ${data.sum} (${data.sumBase10}) hours today.`)
   }
 }

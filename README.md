@@ -54,7 +54,6 @@ Run `yarn prepack` every time you make changes.
 * [`humaans help [COMMANDS]`](#humaans-help-commands)
 * [`humaans login`](#humaans-login)
 * [`humaans report [START] [END]`](#humaans-report-start-end)
-* [`humaans report today`](#humaans-report-today)
 
 ## `humaans clock in [TIME]`
 
@@ -71,9 +70,13 @@ DESCRIPTION
   Clock in
 
 EXAMPLES
-  $ humaans clock in
+  Clock in now:
 
-  $ humaans clock in 9:00
+    $ humaans clock in
+
+  Clock in at the given hour:
+
+    $ humaans clock in 9:00
 ```
 
 _See code: [src/commands/clock/in.ts](https://github.com/zefj/humaans-cli/blob/v0.1.2-next.1/src/commands/clock/in.ts)_
@@ -93,9 +96,13 @@ DESCRIPTION
   Clock out
 
 EXAMPLES
-  $ humaans clock out
+  Clock out now:
 
-  $ humaans clock out 17:00
+    $ humaans clock out
+
+  Clock out at the given hour:
+
+    $ humaans clock out 17:00
 ```
 
 _See code: [src/commands/clock/out.ts](https://github.com/zefj/humaans-cli/blob/v0.1.2-next.1/src/commands/clock/out.ts)_
@@ -122,14 +129,14 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.0.1
 
 ## `humaans login`
 
-Login to Humaans
+Login to Humaans.
 
 ```
 USAGE
   $ humaans login
 
 DESCRIPTION
-  Login to Humaans
+  Login to Humaans.
 
 EXAMPLES
   $ humaans login
@@ -139,7 +146,7 @@ _See code: [src/commands/login.ts](https://github.com/zefj/humaans-cli/blob/v0.1
 
 ## `humaans report [START] [END]`
 
-Generate an hour report. Takes paid time off into consideration.
+Generate an hour report.
 
 ```
 USAGE
@@ -150,27 +157,25 @@ ARGUMENTS
   END    End date
 
 DESCRIPTION
-  Generate an hour report. Takes paid time off into consideration.
+  Generate an hour report.
 
 EXAMPLES
-  $ humaans report
+  Calculate report from the first day to the last day of the current month:
 
-  $ humaans report 2023-03-01 2023-03-31
+    $ humaans report
+
+  Calculate report for today:
+
+    $ humaans report today
+
+  Calculate report from the given day to the last day of the current month:
+
+    $ humaans report 2023-03-01
+
+  Calculate report for the given period:
+
+    $ humaans report 2023-03-10 2023-04-10
 ```
 
 _See code: [src/commands/report.ts](https://github.com/zefj/humaans-cli/blob/v0.1.2-next.1/src/commands/report.ts)_
-
-## `humaans report today`
-
-Generate an hour report for today
-
-```
-USAGE
-  $ humaans report today
-
-DESCRIPTION
-  Generate an hour report for today
-```
-
-_See code: [src/commands/report/today.ts](https://github.com/zefj/humaans-cli/blob/v0.1.2-next.1/src/commands/report/today.ts)_
 <!-- commandsstop -->

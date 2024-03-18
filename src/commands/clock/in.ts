@@ -11,7 +11,10 @@ export default class ClockIn extends TimesheetCommand {
 
   static description = 'Clock in'
 
-  static examples = ['<%= config.bin %> <%= command.id %>', '<%= config.bin %> <%= command.id %> 9:00']
+  static examples = [
+    {description: `Clock in now:`, command: `$ <%= config.bin %> <%= command.id %>`},
+    {description: `Clock in at the given hour:`, command: `$ <%= config.bin %> <%= command.id %> 9:00`},
+  ]
 
   public async run(): Promise<void> {
     const activeTimesheetEntry = await this.getActiveTimesheetEntry()

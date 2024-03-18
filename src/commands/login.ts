@@ -6,7 +6,7 @@ import fetch from 'node-fetch'
 import {Config, HumaansMeResponse} from '../types.js'
 
 export default class Login extends Command {
-  static description = 'Login to Humaans'
+  static description = 'Login to Humaans.'
 
   static examples = ['<%= config.bin %> <%= command.id %>']
 

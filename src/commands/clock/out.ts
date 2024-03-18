@@ -11,7 +11,10 @@ export default class ClockOut extends TimesheetCommand {
 
   static description = 'Clock out'
 
-  static examples = ['<%= config.bin %> <%= command.id %>', '<%= config.bin %> <%= command.id %> 17:00']
+  static examples = [
+    {description: `Clock out now:`, command: `$ <%= config.bin %> <%= command.id %>`},
+    {description: `Clock out at the given hour:`, command: `$ <%= config.bin %> <%= command.id %> 17:00`},
+  ]
 
   public async run(): Promise<void> {
     const activeTimesheetEntry = await this.getActiveTimesheetEntry()

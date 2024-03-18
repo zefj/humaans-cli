@@ -29,7 +29,7 @@ $ npm install -g humaans-cli
 $ humaans COMMAND
 running command...
 $ humaans (--version)
-humaans-cli/0.1.2-next.1 darwin-arm64 node-v20.10.0
+humaans-cli/0.1.2-next.2 darwin-arm64 node-v20.10.0
 $ humaans --help [COMMAND]
 USAGE
   $ humaans COMMAND
@@ -79,7 +79,7 @@ EXAMPLES
     $ humaans clock in 9:00
 ```
 
-_See code: [src/commands/clock/in.ts](https://github.com/zefj/humaans-cli/blob/v0.1.2-next.1/src/commands/clock/in.ts)_
+_See code: [src/commands/clock/in.ts](https://github.com/zefj/humaans-cli/blob/v0.1.2-next.2/src/commands/clock/in.ts)_
 
 ## `humaans clock out [TIME]`
 
@@ -105,7 +105,7 @@ EXAMPLES
     $ humaans clock out 17:00
 ```
 
-_See code: [src/commands/clock/out.ts](https://github.com/zefj/humaans-cli/blob/v0.1.2-next.1/src/commands/clock/out.ts)_
+_See code: [src/commands/clock/out.ts](https://github.com/zefj/humaans-cli/blob/v0.1.2-next.2/src/commands/clock/out.ts)_
 
 ## `humaans help [COMMANDS]`
 
@@ -142,7 +142,7 @@ EXAMPLES
   $ humaans login
 ```
 
-_See code: [src/commands/login.ts](https://github.com/zefj/humaans-cli/blob/v0.1.2-next.1/src/commands/login.ts)_
+_See code: [src/commands/login.ts](https://github.com/zefj/humaans-cli/blob/v0.1.2-next.2/src/commands/login.ts)_
 
 ## `humaans report [START] [END]`
 
@@ -177,5 +177,5 @@ EXAMPLES
     $ humaans report 2023-03-10 2023-04-10
 ```
 
-_See code: [src/commands/report.ts](https://github.com/zefj/humaans-cli/blob/v0.1.2-next.1/src/commands/report.ts)_
+_See code: [src/commands/report.ts](https://github.com/zefj/humaans-cli/blob/v0.1.2-next.2/src/commands/report.ts)_
 <!-- commandsstop -->

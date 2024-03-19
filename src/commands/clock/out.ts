@@ -49,7 +49,7 @@ export default class ClockOut extends TimesheetCommand {
     }
 
     const data = (await response.json()) as HumaansTimesheetEntry
-    const clockOutTime = this.dropSeconds(data.startTime)
+    const clockOutTime = this.dropSeconds(data.endTime!)
 
     this.log(`⏱️  Clocked out at ${chalk.bold(clockOutTime)}.`)
   }

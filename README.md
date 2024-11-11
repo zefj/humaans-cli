@@ -4,12 +4,17 @@ A simple CLI for [humaans.io](https://humaans.io), put together to provide easie
 
 Not affiliated with Humaans. Built for internal needs.
 
+![screenshot](./static/report.png)
+
+# Table of contents
+
 <!-- toc -->
-* [humaans-cli](#humaans-cli)
-* [Why](#why)
-* [Usage](#usage)
-* [Development](#development)
-* [Commands](#commands)
+
+- [humaans-cli](#humaans-cli)
+- [Why](#why)
+- [Usage](#usage)
+- [Development](#development)
+- [Commands](#commands)
 <!-- tocstop -->
 
 # Why
@@ -20,10 +25,12 @@ Humaans is missing a few crucial features:
 - No easy access to total time clocked today
 - No sum of hours clocked in a period
 
+This helps interact with the platform when you're comfortable with the command line.
 
 # Usage
 
 <!-- usage -->
+
 ```sh-session
 $ npm install -g humaans-cli
 $ humaans COMMAND
@@ -35,13 +42,15 @@ USAGE
   $ humaans COMMAND
 ...
 ```
+
 <!-- usagestop -->
 
 # Development
+
 ```sh-session
 $ yarn install
 $ yarn prepack
-$ ./bin/dev.js help 
+$ ./bin/dev.js help
 ```
 
 Run `yarn prepack` every time you make changes.
@@ -49,11 +58,12 @@ Run `yarn prepack` every time you make changes.
 # Commands
 
 <!-- commands -->
-* [`humaans clock in [TIME]`](#humaans-clock-in-time)
-* [`humaans clock out [TIME]`](#humaans-clock-out-time)
-* [`humaans help [COMMANDS]`](#humaans-help-commands)
-* [`humaans login`](#humaans-login)
-* [`humaans report [START] [END]`](#humaans-report-start-end)
+
+- [`humaans clock in [TIME]`](#humaans-clock-in-time)
+- [`humaans clock out [TIME]`](#humaans-clock-out-time)
+- [`humaans help [COMMANDS]`](#humaans-help-commands)
+- [`humaans login`](#humaans-login)
+- [`humaans report [START] [END]`](#humaans-report-start-end)
 
 ## `humaans clock in [TIME]`
 
@@ -178,4 +188,5 @@ EXAMPLES
 ```
 
 _See code: [src/commands/report.ts](https://github.com/zefj/humaans-cli/blob/v0.1.5/src/commands/report.ts)_
+
 <!-- commandsstop -->
